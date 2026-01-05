@@ -76,6 +76,12 @@ backup_and_link "$SCRIPT_DIR/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 # Tmux
 backup_and_link "$SCRIPT_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
+# Install TPM (Tmux Plugin Manager) if not present
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    info "Installing TPM (Tmux Plugin Manager)..."
+    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
+
 # Neovim (link entire directory)
 backup_and_link "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
 
@@ -102,5 +108,6 @@ echo "Notes:"
 echo "  - Existing configs were backed up with .backup.* extension"
 echo "  - Run 'source ~/.zshrc' to reload zsh config"
 echo "  - Run 'tmux source ~/.tmux.conf' to reload tmux config (if in tmux)"
+echo "  - Press prefix + I in tmux to install plugins (Nord theme)"
 echo "  - Open nvim to let Lazy.nvim install plugins"
 echo ""
