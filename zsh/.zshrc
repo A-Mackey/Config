@@ -1,6 +1,8 @@
 # Set locale early to prevent warnings during initialization
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+if locale -a 2>/dev/null | grep -q "en_US.utf8"; then
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]

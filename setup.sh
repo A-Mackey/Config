@@ -87,6 +87,12 @@ if ! command -v xclip &> /dev/null; then
     echo "      Install with: sudo apt install xclip"
 fi
 
+# Check for en_US.UTF-8 locale
+if ! locale -a 2>/dev/null | grep -q "en_US.utf8"; then
+    warn "en_US.UTF-8 locale is not generated"
+    echo "      Run: sudo locale-gen en_US.UTF-8 && sudo update-locale"
+fi
+
 echo ""
 echo "========================================"
 echo "  Setup Complete!"
