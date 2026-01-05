@@ -17,6 +17,7 @@ require("lazy").setup({
   require("plugins.lsp"),
   -- Colorscheme
   { "EdenEast/nightfox.nvim", lazy = false },
+  { "folke/tokyonight.nvim", lazy = false },
 
   -- Syntax Highlighting
   { "nvim-treesitter/nvim-treesitter" },
