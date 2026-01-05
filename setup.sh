@@ -80,6 +80,14 @@ backup_and_link "$SCRIPT_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 backup_and_link "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
 
 echo ""
+
+# Check for xclip (required for tmux clipboard integration)
+if ! command -v xclip &> /dev/null; then
+    warn "xclip is not installed (required for tmux clipboard)"
+    echo "      Install with: sudo apt install xclip"
+fi
+
+echo ""
 echo "========================================"
 echo "  Setup Complete!"
 echo "========================================"
