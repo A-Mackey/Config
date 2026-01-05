@@ -52,6 +52,7 @@ echo "========================================"
 echo ""
 echo "This will create symlinks for:"
 echo "  - ~/.zshrc"
+echo "  - ~/.p10k.zsh"
 echo "  - ~/.tmux.conf"
 echo "  - ~/.config/nvim"
 echo ""
@@ -70,6 +71,7 @@ echo ""
 
 # ZSH
 backup_and_link "$SCRIPT_DIR/zsh/.zshrc" "$HOME/.zshrc"
+backup_and_link "$SCRIPT_DIR/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 
 # Tmux
 backup_and_link "$SCRIPT_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"

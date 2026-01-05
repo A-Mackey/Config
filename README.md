@@ -6,7 +6,7 @@ Personal configuration files for zsh, tmux, and neovim.
 
 | Config | Description |
 |--------|-------------|
-| `zsh/` | Zsh config with oh-my-zsh and Powerlevel10k theme |
+| `zsh/` | Zsh config with oh-my-zsh, Powerlevel10k theme and config |
 | `tmux/` | Tmux config with vim-style navigation (Ctrl-Space prefix) |
 | `nvim/` | Neovim config with Lazy.nvim, Treesitter, Telescope, LSP |
 
