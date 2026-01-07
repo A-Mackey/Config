@@ -99,6 +99,21 @@ if ! locale -a 2>/dev/null | grep -q "en_US.utf8"; then
     echo "      Run: sudo locale-gen en_US.UTF-8 && sudo update-locale"
 fi
 
+# Ensure zsh is the default shell
+if command -v zsh &> /dev/null; then
+    ZSH_PATH=$(command -v zsh)
+    if [ "$SHELL" != "$ZSH_PATH" ]; then
+        info "Setting zsh as the default shell..."
+        chsh -s "$ZSH_PATH"
+        info "Default shell changed to zsh (will take effect on next login)"
+    else
+        info "zsh is already the default shell"
+    fi
+else
+    warn "zsh is not installed"
+    echo "      Install with: sudo apt install zsh"
+fi
+
 echo ""
 echo "========================================"
 echo "  Setup Complete!"
