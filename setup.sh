@@ -69,6 +69,19 @@ fi
 
 echo ""
 
+# Install Oh My Zsh if not present
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    info "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+# Install Powerlevel10k theme if not present
+P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ ! -d "$P10K_DIR" ]; then
+    info "Installing Powerlevel10k theme..."
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+fi
+
 # ZSH
 backup_and_link "$SCRIPT_DIR/zsh/.zshrc" "$HOME/.zshrc"
 backup_and_link "$SCRIPT_DIR/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
