@@ -33,6 +33,14 @@ vim.diagnostic.config({
     },
 })
 
+-- Auto-reload files changed outside of Neovim
+vim.o.autoread = true
+vim.o.updatetime = 1000
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  command = "checktime",
+})
+
 -- Customize diagnostic signs
 vim.fn.sign_define("DiagnosticSignError", { text = "󰅚", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })
@@ -47,4 +55,3 @@ vim.keymap.set('i', '<C-v>', '<C-v>', { noremap = true, desc = "Insert literal c
 
 -- Terminal mode: Ctrl+V → pass through (optional, usually not needed)
 vim.keymap.set('t', '<C-v>', '<C-v>', { noremap = true, desc = "Terminal literal" })
-
