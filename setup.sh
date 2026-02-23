@@ -17,6 +17,33 @@ info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
+install_pkg() {
+    local pkg="$1"
+    if command -v apt-get &> /dev/null; then
+        sudo apt-get install -y "$pkg"
+    elif command -v dnf &> /dev/null; then
+        sudo dnf install -y "$pkg"
+    elif command -v yum &> /dev/null; then
+        sudo yum install -y "$pkg"
+    elif command -v pacman &> /dev/null; then
+        sudo pacman -Sy --noconfirm "$pkg"
+    elif command -v brew &> /dev/null; then
+        brew install "$pkg"
+    else
+        warn "No supported package manager found. Please install '$pkg' manually."
+        return 1
+    fi
+}
+
+ensure_command() {
+    local cmd="$1"
+    local pkg="$2"
+    if ! command -v "$cmd" &> /dev/null; then
+        info "Installing $pkg (provides $cmd)..."
+        install_pkg "$pkg"
+    fi
+}
+
 backup_and_link() {
     local source="$1"
     local target="$2"
@@ -69,6 +96,14 @@ fi
 
 echo ""
 
+# Base dependencies
+ensure_command curl curl
+ensure_command git git
+ensure_command zsh zsh
+ensure_command rg ripgrep
+ensure_command tmux tmux
+ensure_command xclip xclip
+
 # Install Oh My Zsh if not present
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     info "Installing Oh My Zsh..."
@@ -99,6 +134,25 @@ fi
 backup_and_link "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
 
 echo ""
+
+# Install NVM if not present
+if [ ! -d "$HOME/.nvm" ]; then
+    info "Installing NVM..."
+    curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+fi
+
+# Install latest LTS Node via NVM if available
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    # shellcheck disable=SC1090
+    . "$HOME/.nvm/nvm.sh"
+    if ! command -v node &> /dev/null; then
+        info "Installing latest LTS Node via NVM..."
+        nvm install --lts
+        nvm use --lts
+    fi
+else
+    warn "NVM not found; skipping Node install."
+fi
 
 # Check for xclip (required for tmux clipboard integration)
 if ! command -v xclip &> /dev/null; then
