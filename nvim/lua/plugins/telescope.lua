@@ -14,9 +14,13 @@ require('telescope').setup{
     }
   },
   pickers = {
+    find_files = {
+      hidden = true,
+      no_ignore = true,
+      no_ignore_parent = true,
+    },
     buffers = {
       initial_mode = "normal"
     }
   }
 }
-

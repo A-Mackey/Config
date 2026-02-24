@@ -9,6 +9,9 @@ require("nvim-tree").setup({
   sort = {
     sorter = "case_sensitive",
   },
+  git = {
+    ignore = false,
+  },
   view = {
     width = 30,
   },
