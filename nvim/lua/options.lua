@@ -9,6 +9,7 @@ vim.opt.wrap = false        -- Don't wrap lines
 vim.opt.expandtab = true    -- Use spaces instead of tabs
 vim.opt.tabstop = 2         -- Number of spaces tabs count for
 vim.opt.shiftwidth = 2      -- Size of an indent
+vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 
 vim.o.splitright = true     -- Split right
 
