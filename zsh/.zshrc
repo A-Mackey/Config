@@ -42,6 +42,17 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
+# Turn off sandbox for arduino IDE
+export ARDUINO_APPIMAGE_SANDBOX=0
+
 alias p=python3
 alias pip=pip3
 alias t=tmux
+
+
+
+# ESP-IDF
+esp() {
+  source "/home/aidan/.espressif/tools/activate_idf_v6.0.sh"
+}
+

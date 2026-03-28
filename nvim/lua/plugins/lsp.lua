@@ -18,9 +18,6 @@ return {
           "eslint",
           "tailwindcss",
 
-          -- c/c++
-          "clangd",
-
           -- Lua
           "lua_ls"
         },

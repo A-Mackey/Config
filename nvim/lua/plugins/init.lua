@@ -69,3 +69,10 @@ require("lazy").setup({
     }
   },
 })
+
+-- Setup for c/c++ projects
+vim.lsp.config('clangd', {
+  cmd = { 'clangd', '--background-index' },
+})
+
+vim.lsp.enable('clangd')
