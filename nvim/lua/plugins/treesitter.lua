@@ -10,6 +10,7 @@ return {
         "typescript",
         "javascript",
         "tsx",
+        "rust",
       },
       sync_install = false,
       auto_install = true,

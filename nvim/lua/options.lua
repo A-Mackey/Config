@@ -13,6 +13,10 @@ vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 
 vim.o.splitright = true     -- Split right
 
+-- Show all whitespace: spaces as ·, tabs as ›, trailing spaces as • (bolder), nbsp as ␣.
+vim.opt.list = true
+vim.opt.listchars = { space = "·", tab = "› ", trail = "•", nbsp = "␣" }
+
 vim.filetype.add({
   extensions = {
     ts = "typescript",

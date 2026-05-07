@@ -9,6 +9,7 @@ Personal configuration files for zsh, tmux, and neovim.
 | `zsh/` | Zsh config with oh-my-zsh, Powerlevel10k theme and config |
 | `tmux/` | Tmux config with vim-style navigation (Ctrl-Space prefix) |
 | `nvim/` | Neovim config with Lazy.nvim, Treesitter, Telescope, LSP |
+| `x11/`  | X11 session config (`.xprofile`); remaps Caps Lock to Backspace |
 
 ## Installation
 

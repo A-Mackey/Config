@@ -36,6 +36,10 @@ export EDITOR='nvim'
 
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
+# Word jumps with Alt+Arrow (zsh has no default for these escape sequences).
+bindkey '^[[1;3D' backward-word   # Alt+Left
+bindkey '^[[1;3C' forward-word    # Alt+Right
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -48,6 +52,7 @@ export ARDUINO_APPIMAGE_SANDBOX=0
 alias p=python3
 alias pip=pip3
 alias t=tmux
+alias c=cargo
 
 
 
@@ -55,4 +60,6 @@ alias t=tmux
 esp() {
   source "/home/aidan/.espressif/tools/activate_idf_v6.0.sh"
 }
+
+PATH=$PATH:/home/aidan/.cargo/bin
 

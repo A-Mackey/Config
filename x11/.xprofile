@@ -1,0 +1,5 @@
+#!/bin/sh
+# Sourced by the display manager at X session start.
+
+# Remap Caps Lock to Backspace.
+setxkbmap -option caps:backspace

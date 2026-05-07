@@ -82,6 +82,7 @@ echo "  - ~/.zshrc"
 echo "  - ~/.p10k.zsh"
 echo "  - ~/.tmux.conf"
 echo "  - ~/.config/nvim"
+echo "  - ~/.xprofile"
 echo ""
 echo "Source directory: $SCRIPT_DIR"
 echo ""
@@ -132,6 +133,15 @@ fi
 
 # Neovim (link entire directory)
 backup_and_link "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
+
+# X11 session config (caps:backspace remap, etc.)
+backup_and_link "$SCRIPT_DIR/x11/.xprofile" "$HOME/.xprofile"
+
+# Apply keyboard remap immediately if in an X session
+if [ -n "$DISPLAY" ] && command -v setxkbmap &> /dev/null; then
+    setxkbmap -option caps:backspace
+    info "Applied caps:backspace remap to current X session"
+fi
 
 echo ""
 

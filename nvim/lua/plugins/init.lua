@@ -15,9 +15,22 @@ vim.opt.rtp:prepend(lazypath)
 -- Initialize lazy.nvim with some plugins
 require("lazy").setup({
   require("plugins.lsp"),
+
+  -- Neovim Lua API completion / goto-def for config files
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+
   -- Colorscheme
   { "EdenEast/nightfox.nvim", lazy = false },
   { "folke/tokyonight.nvim", lazy = false },
+  { "bluz71/vim-moonfly-colors", lazy = false },
 
   -- Syntax Highlighting
   { "nvim-treesitter/nvim-treesitter" },
@@ -35,6 +48,8 @@ require("lazy").setup({
 
   -- Diagnostics
   { 'folke/trouble.nvim',
+    opts = {},
+    cmd = "Trouble",
     dependencies = {
       'nvim-tree/nvim-web-devicons'
     }
@@ -47,6 +62,21 @@ require("lazy").setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons'
     }
+  },
+
+  -- Floating UI for vim.ui.select and vim.ui.input (code actions, rename, etc.)
+  { 'stevearc/dressing.nvim', config = true },
+
+  -- Render markdown in LSP hover popups
+  { 'MeanderingProgrammer/render-markdown.nvim',
+    opts = {
+      file_types = { 'markdown', 'Avante' },
+      overrides = {
+        buftype = {
+          nofile = { enabled = true },
+        },
+      },
+    },
   },
 
   -- Autocomplete {}[]()"" etc
@@ -69,10 +99,3 @@ require("lazy").setup({
     }
   },
 })
-
--- Setup for c/c++ projects
-vim.lsp.config('clangd', {
-  cmd = { 'clangd', '--background-index' },
-})
-
-vim.lsp.enable('clangd')

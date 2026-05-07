@@ -11,7 +11,8 @@ require("tokyonight").setup({
   },
 })
 
-vim.cmd.colorscheme("tokyonight-night")
+-- vim.cmd.colorscheme("tokyonight-night")
+vim.cmd.colorscheme("moonfly")
 
 -- Orange line numbers (dimmer for inactive, bright for active)
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#b36b00" })

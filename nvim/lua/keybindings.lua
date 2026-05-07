@@ -44,13 +44,13 @@ map('i', 'Jk', '<ESC>', { desc = 'Exit insert mode' })
 
 -- LSP keybindings
 map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to declaration' })
-map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
-map('n', 'K', vim.lsp.buf.hover, { desc = 'Hover documentation' })
-map('n', 'gi', vim.lsp.buf.implementation, { desc = 'Go to implementation' })
+map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Go to definition' })
+map('n', 'gk', vim.lsp.buf.hover, { desc = 'Hover documentation' })
+map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Go to implementation' })
 map('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature help' })
 map('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename' })
 map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
-map('n', 'gr', vim.lsp.buf.references, { desc = 'Go to references' })
+map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Go to references' })
 
 -- Telescope
 map('n', '<leader>f', '<cmd>Telescope find_files<cr>', { desc = "Find File"})
@@ -81,6 +81,8 @@ map('n', ';', function()
     })
 end, { desc = "Find buffers" })
 map('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show diagnostics" })
+map('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = "Toggle Trouble diagnostics" })
+map('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = "Toggle Trouble diagnostics (current buffer)" })
 
 
 
@@ -93,4 +95,3 @@ end, { desc = "Open NvimTree file in vertical split" })
 map('n', '<leader>s', function()
   api.node.open.horizontal()
 end, { desc = "Open NvimTree file in horizontal split" })
-
