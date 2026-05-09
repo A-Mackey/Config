@@ -53,6 +53,7 @@ alias p=python3
 alias pip=pip3
 alias t=tmux
 alias c=cargo
+alias l='ls -la'
 
 
 
