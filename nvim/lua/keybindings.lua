@@ -50,11 +50,42 @@ map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Go to
 map('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature help' })
 map('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename' })
 map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
+map('n', '<leader>cf', function()
+    vim.lsp.buf.format({ async = true })
+end, { desc = 'Format file' })
+map('n', '<leader>cl', function()
+    -- Apply "fix all" / organize imports (e.g. remove unused imports), but only
+    -- for the action kinds the attached server actually advertises. This avoids
+    -- the "No code actions available" message on servers like rust-analyzer that
+    -- don't implement source.organizeImports.
+    local supported = {}
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+        local provider = client.server_capabilities.codeActionProvider
+        for _, kind in ipairs((type(provider) == 'table' and provider.codeActionKinds) or {}) do
+            supported[kind] = true
+        end
+    end
+    for _, kind in ipairs({ 'source.fixAll', 'source.organizeImports' }) do
+        if supported[kind] then
+            vim.lsp.buf.code_action({
+                context = { only = { kind }, diagnostics = {} },
+                apply = true,
+            })
+        end
+    end
+end, { desc = 'Lint fix & organize imports' })
 map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Go to references' })
 
 -- Telescope
 map('n', '<leader>f', '<cmd>Telescope find_files<cr>', { desc = "Find File"})
 map('n', '<leader>g', '<cmd>Telescope live_grep<cr>', { desc = "Grep Search"})
+-- Grep prefilled with the system clipboard (Neovim's "+" register). Newlines
+-- are flattened so a multi-line clipboard doesn't break the search.
+map('n', '<leader>G', function()
+    require('telescope.builtin').live_grep({
+        default_text = (vim.fn.getreg('+') or ''):gsub('[\r\n]+', ' '),
+    })
+end, { desc = "Grep clipboard contents" })
 map('n', '<leader>h', '<cmd>Telescope help_tags<cr>', { desc = "Find Help"})
 map('n', '<leader>b', function()
     require('telescope.builtin').buffers({

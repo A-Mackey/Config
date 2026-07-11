@@ -13,6 +13,10 @@ vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 
 vim.o.splitright = true     -- Split right
 
+-- Scroll 1 line per mouse-wheel tick instead of the default 3, so motion is
+-- easier to visually track (matches the tmux/Ghostty wheel-step settings).
+vim.opt.mousescroll = "ver:1,hor:6"
+
 -- Show all whitespace: spaces as ·, tabs as ›, trailing spaces as • (bolder), nbsp as ␣.
 vim.opt.list = true
 vim.opt.listchars = { space = "·", tab = "› ", trail = "•", nbsp = "␣" }

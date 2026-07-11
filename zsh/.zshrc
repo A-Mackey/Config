@@ -34,6 +34,19 @@ source $ZSH/oh-my-zsh.sh
 # Preferred editor for local and remote sessions
 export EDITOR='nvim'
 
+# fzf: vim-style navigation in every fzf prompt (including the extrakto popup,
+# which reads these global opts). fzf has no insert/normal modes and can't bind
+# multi-key sequences, so the nvim "jk" escape can't be reproduced here; use Esc
+# or Ctrl-c to abort instead. Ctrl-j/k move the cursor, Ctrl-u/d page, and
+# Ctrl-h/l move within the query line.
+export FZF_DEFAULT_OPTS="
+  --bind 'ctrl-j:down,ctrl-k:up'
+  --bind 'ctrl-d:half-page-down,ctrl-u:half-page-up'
+  --bind 'ctrl-h:backward-char,ctrl-l:forward-char'
+  --bind 'ctrl-a:beginning-of-line,ctrl-e:end-of-line'
+  --cycle
+"
+
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # Word jumps with Alt+Arrow (zsh has no default for these escape sequences).
@@ -54,7 +67,7 @@ alias pip=pip3
 alias t=tmux
 alias c=cargo
 alias l='ls -la'
-
+alias j=just
 
 
 # ESP-IDF
@@ -64,3 +77,7 @@ esp() {
 
 PATH=$PATH:/home/aidan/.cargo/bin
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

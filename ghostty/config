@@ -1,0 +1,12 @@
+# Ghostty config. Run `ghostty +show-config --default --docs` for the full
+# list of options; anything not set here uses Ghostty's default.
+
+command = "/usr/bin/zsh"
+
+background = 1C2021
+background-opacity = 0.80
+
+# Move 1 line per physical mouse-wheel click instead of the default 3, so
+# scrolling steps are small enough to visually track. Precision devices
+# (trackpads) are left at their default of 1.
+mouse-scroll-multiplier = discrete:1

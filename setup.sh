@@ -81,6 +81,7 @@ echo "This will create symlinks for:"
 echo "  - ~/.zshrc"
 echo "  - ~/.p10k.zsh"
 echo "  - ~/.tmux.conf"
+echo "  - ~/.config/ghostty/config"
 echo "  - ~/.config/nvim"
 echo "  - ~/.xprofile"
 echo ""
@@ -104,6 +105,7 @@ ensure_command zsh zsh
 ensure_command rg ripgrep
 ensure_command tmux tmux
 ensure_command xclip xclip
+ensure_command fzf fzf   # required by the extrakto tmux plugin (URL/text picker)
 
 # Install Oh My Zsh if not present
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -124,6 +126,12 @@ backup_and_link "$SCRIPT_DIR/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 
 # Tmux
 backup_and_link "$SCRIPT_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
+# Split-out config files sourced by .tmux.conf (general/panes/clipboard/statusbar/plugins)
+backup_and_link "$SCRIPT_DIR/tmux/conf.d" "$HOME/.tmux/conf.d"
+# Clipboard sanitizer used by tmux copy bindings (strips chars that crash other apps on paste)
+backup_and_link "$SCRIPT_DIR/tmux/clipboard-filter.pl" "$HOME/.tmux/clipboard-filter.pl"
+# CPU/RAM/disk usage helper used by the status bar
+backup_and_link "$SCRIPT_DIR/tmux/sysstats.sh" "$HOME/.tmux/sysstats.sh"
 
 # Install TPM (Tmux Plugin Manager) if not present
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
@@ -133,6 +141,9 @@ fi
 
 # Neovim (link entire directory)
 backup_and_link "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
+
+# Ghostty terminal
+backup_and_link "$SCRIPT_DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
 # X11 session config (caps:backspace remap, etc.)
 backup_and_link "$SCRIPT_DIR/x11/.xprofile" "$HOME/.xprofile"

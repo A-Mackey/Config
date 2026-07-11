@@ -23,7 +23,10 @@ return {
           "clangd",
         },
         -- v2 default: vim.lsp.enable() is called for every installed server.
-        -- automatic_enable = true,
+        -- rustaceanvim owns rust_analyzer (starts/configures it itself), so we
+        -- still let Mason install the binary but exclude it from auto-enable to
+        -- avoid attaching it twice.
+        automatic_enable = { exclude = { "rust_analyzer" } },
       })
 
       -- Default capabilities applied to every server (nvim-cmp completion support).

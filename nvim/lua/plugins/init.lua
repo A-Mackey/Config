@@ -38,6 +38,47 @@ require("lazy").setup({
   -- Java Language Server
   { "mfussenegger/nvim-jdtls" },
 
+  -- Rust: rust-analyzer integration with extra commands (openDocs, hover
+  -- actions, etc.). Configured through vim.g.rustaceanvim, which must be set
+  -- before the plugin starts the LSP — hence `init` rather than `opts`.
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^6",
+    lazy = false, -- the plugin lazy-loads itself on rust files
+    init = function()
+      vim.g.rustaceanvim = {
+        server = {
+          on_attach = function(_, bufnr)
+            local map = vim.keymap.set
+            -- Hover with actionable links (impls, go-to-type-def). Replaces the
+            -- plain vim.lsp.buf.hover from keybindings.lua for Rust buffers.
+            map("n", "gk", function()
+              vim.cmd.RustLsp({ "hover", "actions" })
+            end, { buffer = bufnr, desc = "Rust hover actions" })
+            -- Full generated rustdoc for the symbol under cursor: lists every
+            -- field and method with its visibility.
+            map("n", "<leader>rd", function()
+              vim.cmd.RustLsp("openDocs")
+            end, { buffer = bufnr, desc = "Open rustdoc for symbol" })
+          end,
+          default_settings = {
+            ["rust-analyzer"] = {
+              hover = {
+                show = {
+                  fields = 50,
+                  enumVariants = 50,
+                  traitAssocItems = 50,
+                },
+                memoryLayout = { enable = true },
+                documentation = { keywords = { enable = true } },
+              },
+            },
+          },
+        },
+      }
+    end,
+  },
+
 
   -- Telescope (FuzzyFinder)
   { "nvim-telescope/telescope.nvim",

@@ -14,6 +14,10 @@ require("nvim-tree").setup({
         if n.type == "directory" then dirs[n.name] = true end
       end
       local function key(n)
+        if n.type ~= "directory" and n.name == "mod.rs" then
+          -- `mod.rs` always pinned to the top of its directory.
+          return { -1, "", 0 }
+        end
         if n.type == "directory" then
           return { 0, n.name, 1 }
         end
@@ -40,6 +44,11 @@ require("nvim-tree").setup({
   },
   renderer = {
     group_empty = true,
+    icons = {
+      -- Draw git status in the sign column (gutter) instead of inline, so
+      -- changed-file icons never shift the filename/directory text around.
+      git_placement = "signcolumn",
+    },
   },
   filters = {
   },
