@@ -21,6 +21,7 @@ return {
           "lua_ls",
           "rust_analyzer",
           "clangd",
+          "arduino_language_server",
         },
         -- v2 default: vim.lsp.enable() is called for every installed server.
         -- rustaceanvim owns rust_analyzer (starts/configures it itself), so we
@@ -36,6 +37,23 @@ return {
       -- Per-server overrides (merged on top of nvim-lspconfig's defaults).
       vim.lsp.config("clangd", {
         cmd = { "clangd", "--background-index" },
+      })
+
+      -- arduino-language-server is a thin wrapper: it shells out to arduino-cli
+      -- to compile the sketch, then feeds the resulting compile_commands to
+      -- clangd. lspconfig's default cmd passes no flags, so it can't find any of
+      -- those and silently returns no completions/diagnostics. All four must be
+      -- explicit.
+      local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/"
+      vim.lsp.config("arduino_language_server", {
+        cmd = {
+          mason_bin .. "arduino-language-server",
+          "-cli", vim.fn.exepath("arduino-cli"),
+          "-cli-config", vim.fn.expand("~/.arduino15/arduino-cli.yaml"),
+          "-clangd", mason_bin .. "clangd",
+          -- Fallback only; a sketch.yaml with default_fqbn takes precedence.
+          "-fqbn", "arduino:avr:uno",
+        },
       })
 
       -- Completion

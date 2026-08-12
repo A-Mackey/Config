@@ -3,15 +3,20 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Other common options
-vim.opt.number = true        -- Show line numbers
-vim.opt.relativenumber = true -- Show relative line numbers
-vim.opt.wrap = false        -- Don't wrap lines
-vim.opt.expandtab = true    -- Use spaces instead of tabs
-vim.opt.tabstop = 2         -- Number of spaces tabs count for
-vim.opt.shiftwidth = 2      -- Size of an indent
+vim.opt.number = true             -- Show line numbers
+vim.opt.relativenumber = true     -- Show relative line numbers
+vim.opt.wrap = false              -- Don't wrap lines
+vim.opt.expandtab = true          -- Use spaces instead of tabs
+vim.opt.tabstop = 2               -- Number of spaces tabs count for
+vim.opt.shiftwidth = 2            -- Size of an indent
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 
-vim.o.splitright = true     -- Split right
+-- Better FPS
+vim.opt.updatetime = 250
+vim.opt.ttimeoutlen = 10
+
+-- Split right
+vim.o.splitright = true 
 
 -- Scroll 1 line per mouse-wheel tick instead of the default 3, so motion is
 -- easier to visually track (matches the tmux/Ghostty wheel-step settings).
@@ -29,17 +34,17 @@ vim.filetype.add({
 })
 
 vim.diagnostic.config({
-    virtual_text = true,      -- Show diagnostic message after the line
-    signs = true,             -- Show signs in the sign column
-    underline = true,         -- Underline the problem area
-    update_in_insert = false, -- Update diagnostics in insert mode
-    severity_sort = true,     -- Sort diagnostics by severity
-    float = {
-        border = "rounded",
-        source = "always",
-        header = "",
-        prefix = "",
-    },
+  virtual_text = true,        -- Show diagnostic message after the line
+  signs = true,               -- Show signs in the sign column
+  underline = true,           -- Underline the problem area
+  update_in_insert = false,   -- Update diagnostics in insert mode
+  severity_sort = true,       -- Sort diagnostics by severity
+  float = {
+    border = "rounded",
+    source = "always",
+    header = "",
+    prefix = "",
+  },
 })
 
 -- Auto-reload files changed outside of Neovim

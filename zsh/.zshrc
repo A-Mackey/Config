@@ -68,11 +68,39 @@ alias t=tmux
 alias c=cargo
 alias l='ls -la'
 alias j=just
+alias p=python3
+alias ard=arduino-cli
 
 
 # ESP-IDF
 esp() {
   source "/home/aidan/.espressif/tools/activate_idf_v6.0.sh"
+}
+
+# ESP Rust toolchain (espup). Puts xtensa-esp*-elf-gcc on PATH, which cargo
+# needs as the linker for xtensa-esp32*-none-elf targets, and sets
+# LIBCLANG_PATH for bindgen.
+[ -f "$HOME/export-esp.sh" ] && source "$HOME/export-esp.sh"
+
+# Arduino CLI
+export PATH="$PATH:/home/aidan/.arduino/bin"
+
+# Regenerate the clangd compilation database for the current sketch. The .ino is
+# handled by arduino-language-server, but plain .cpp/.h files are served by
+# clangd, which needs this db to find Arduino.h and the AVR/ESP32 toolchain
+# headers. Re-run after adding files or #include-ing a new library.
+ard-db() {
+  arduino-cli compile --only-compilation-database --build-path ./build "$@" || return
+  if [ ! -e .clangd ]; then
+    cat > .clangd <<'EOF'
+CompileFlags:
+  CompilationDatabase: build
+  # Arduino builds with -w, which hides every warning from clangd.
+  Remove: [-w]
+  Add: [-Wall, -Wextra]
+EOF
+    echo "created .clangd"
+  fi
 }
 
 PATH=$PATH:/home/aidan/.cargo/bin
@@ -81,3 +109,6 @@ PATH=$PATH:/home/aidan/.cargo/bin
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# opencode
+export PATH=/home/aidan/.opencode/bin:$PATH
