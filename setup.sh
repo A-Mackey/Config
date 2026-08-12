@@ -131,6 +131,8 @@ backup_and_link "$SCRIPT_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 backup_and_link "$SCRIPT_DIR/tmux/conf.d" "$HOME/.tmux/conf.d"
 # Clipboard sanitizer used by tmux copy bindings (strips chars that crash other apps on paste)
 backup_and_link "$SCRIPT_DIR/tmux/clipboard-filter.pl" "$HOME/.tmux/clipboard-filter.pl"
+# Writes the (filtered) selection to the clipboard via OSC 52, so tmux copy works over SSH too
+backup_and_link "$SCRIPT_DIR/tmux/osc52-copy.sh" "$HOME/.tmux/osc52-copy.sh"
 # CPU/RAM/disk usage helper used by the status bar
 backup_and_link "$SCRIPT_DIR/tmux/sysstats.sh" "$HOME/.tmux/sysstats.sh"
 
@@ -179,9 +181,10 @@ else
     warn "NVM not found; skipping Node install."
 fi
 
-# Check for xclip (required for tmux clipboard integration)
+# Check for xclip (required for Neovim's system clipboard integration; tmux's
+# own copy bindings use OSC 52 instead, so they work without it)
 if ! command -v xclip &> /dev/null; then
-    warn "xclip is not installed (required for tmux clipboard)"
+    warn "xclip is not installed (required for Neovim clipboard integration)"
     echo "      Install with: sudo apt install xclip"
 fi
 
