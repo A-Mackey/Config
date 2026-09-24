@@ -1,0 +1,15 @@
+# tuicr — https://github.com/agavra/tuicr
+
+# Poll the local diff every second so edits made by background agents show up
+# without pressing `:e`. The same tick refreshes the commit pane (including the
+# "Staged changes" / "Unstaged changes" rows). 0 disables.
+# Ignored in PR mode and with --all-files.
+diff_watch_interval_ms = 1000
+
+# Poll interval for persisted review sessions (your own comments/reviewed marks),
+# so a session edited elsewhere reloads here. 0 disables.
+review_watch_interval_ms = 1000
+
+diff_view = "side-by-side"
+appearance = "system"
+editor = "nvim"

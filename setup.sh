@@ -83,6 +83,7 @@ echo "  - ~/.p10k.zsh"
 echo "  - ~/.tmux.conf"
 echo "  - ~/.config/ghostty/config"
 echo "  - ~/.config/clangd/config.yaml"
+echo "  - ~/.config/tuicr/config.toml"
 echo "  - ~/.config/nvim"
 echo "  - ~/.xprofile"
 echo ""
@@ -150,6 +151,9 @@ backup_and_link "$SCRIPT_DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
 # clangd (re-enables warnings for arduino-language-server, which builds with -w)
 backup_and_link "$SCRIPT_DIR/clangd/config.yaml" "$HOME/.config/clangd/config.yaml"
+
+# tuicr (code review TUI); diff_watch_interval_ms live-reloads the working-tree diff
+backup_and_link "$SCRIPT_DIR/tuicr/config.toml" "$HOME/.config/tuicr/config.toml"
 
 # X11 session config (caps:backspace remap, etc.)
 backup_and_link "$SCRIPT_DIR/x11/.xprofile" "$HOME/.xprofile"
