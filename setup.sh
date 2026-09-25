@@ -86,6 +86,7 @@ echo "  - ~/.config/clangd/config.yaml"
 echo "  - ~/.config/tuicr/config.toml"
 echo "  - ~/.config/nvim"
 echo "  - ~/.xprofile"
+echo "  - ~/.local/share/gnome-shell/extensions/rectangle-snap@aidan.local"
 echo ""
 echo "Source directory: $SCRIPT_DIR"
 echo ""
@@ -162,6 +163,57 @@ backup_and_link "$SCRIPT_DIR/x11/.xprofile" "$HOME/.xprofile"
 if [ -n "$DISPLAY" ] && command -v setxkbmap &> /dev/null; then
     setxkbmap -option caps:backspace
     info "Applied caps:backspace remap to current X session"
+fi
+
+# ---------------------------------------------------------------------------
+# GNOME: Rectangle-style window snapping
+# ---------------------------------------------------------------------------
+# Rectangle Snap is a small local GNOME Shell extension (source in gnome/).
+# It adds Rectangle's halves/quarters/thirds/two-thirds shortcuts on Ctrl+Super,
+# with repeated halves stepping across monitors. Windows stay floating and
+# draggable; snapping only happens on keypress.
+RS_UUID="rectangle-snap@aidan.local"
+RS_SRC="$SCRIPT_DIR/gnome/extensions/$RS_UUID"
+
+if command -v gnome-shell &> /dev/null; then
+    backup_and_link "$RS_SRC" "$HOME/.local/share/gnome-shell/extensions/$RS_UUID"
+
+    # gschemas.compiled is a build artifact (gitignored); regenerate it here.
+    if command -v glib-compile-schemas &> /dev/null; then
+        glib-compile-schemas "$RS_SRC/schemas/"
+        info "Compiled Rectangle Snap GSettings schema"
+    else
+        warn "glib-compile-schemas not found; Rectangle Snap shortcuts will not load"
+        echo "      Install with: sudo apt install libglib2.0-dev-bin"
+    fi
+
+    # Restore GNOME keybinding tweaks (frees Ctrl+Super+D from show-desktop and
+    # Ctrl+Super+U/I/J/K/Return from Tiling Assistant; adds Super alternates).
+    if command -v dconf &> /dev/null; then
+        for conf in "$SCRIPT_DIR"/gnome/dconf/*.conf; do
+            [ -e "$conf" ] || continue
+            case "$(basename "$conf")" in
+                wm-keybindings.conf)      dconf load /org/gnome/desktop/wm/keybindings/ < "$conf" ;;
+                mutter-keybindings.conf)  dconf load /org/gnome/mutter/keybindings/ < "$conf" ;;
+                media-keys.conf)          dconf load /org/gnome/settings-daemon/plugins/media-keys/ < "$conf" ;;
+                tiling-assistant.conf)    dconf load /org/gnome/shell/extensions/tiling-assistant/ < "$conf" ;;
+            esac
+            info "Loaded $(basename "$conf")"
+        done
+    else
+        warn "dconf not found; skipping GNOME keybinding restore"
+    fi
+
+    if command -v gnome-extensions &> /dev/null; then
+        gnome-extensions enable "$RS_UUID" 2>/dev/null || true
+        # Ubuntu ships a second tiling assistant that fights with the upstream
+        # one over the same shortcuts. Keep only upstream.
+        gnome-extensions disable "tiling-assistant@ubuntu.com" 2>/dev/null || true
+    fi
+
+    warn "Log out and back in (or Alt+F2 -> r on X11) to load Rectangle Snap"
+else
+    info "GNOME Shell not detected; skipping Rectangle Snap install"
 fi
 
 echo ""

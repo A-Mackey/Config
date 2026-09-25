@@ -1,0 +1,8 @@
+{
+  "uuid": "rectangle-snap@aidan.local",
+  "name": "Rectangle Snap",
+  "description": "Rectangle-style window snapping on Ctrl+Super: halves (repeat to move across monitors), quarters, thirds, two-thirds, maximize, and center. Windows stay floating; snapping only happens on keypress.",
+  "shell-version": ["45", "46", "47", "48"],
+  "settings-schema": "org.gnome.shell.extensions.rectangle-snap",
+  "gettext-domain": "rectangle-snap"
+}

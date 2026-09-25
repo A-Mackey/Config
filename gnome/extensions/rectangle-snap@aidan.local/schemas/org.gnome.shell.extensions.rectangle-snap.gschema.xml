@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="rectangle-snap">
+  <schema id="org.gnome.shell.extensions.rectangle-snap"
+          path="/org/gnome/shell/extensions/rectangle-snap/">
+
+    <key name="snap-left-half" type="as">
+      <default><![CDATA[['<Control><Super>Left']]]></default>
+      <summary>Left half</summary>
+    </key>
+
+    <key name="snap-right-half" type="as">
+      <default><![CDATA[['<Control><Super>Right']]]></default>
+      <summary>Right half</summary>
+    </key>
+
+    <key name="snap-top-half" type="as">
+      <default><![CDATA[['<Control><Super>Up']]]></default>
+      <summary>Top half</summary>
+    </key>
+
+    <key name="snap-bottom-half" type="as">
+      <default><![CDATA[['<Control><Super>Down']]]></default>
+      <summary>Bottom half</summary>
+    </key>
+
+    <key name="snap-top-left" type="as">
+      <default><![CDATA[['<Control><Super>u']]]></default>
+      <summary>Top-left quarter</summary>
+    </key>
+
+    <key name="snap-top-right" type="as">
+      <default><![CDATA[['<Control><Super>i']]]></default>
+      <summary>Top-right quarter</summary>
+    </key>
+
+    <key name="snap-bottom-left" type="as">
+      <default><![CDATA[['<Control><Super>j']]]></default>
+      <summary>Bottom-left quarter</summary>
+    </key>
+
+    <key name="snap-bottom-right" type="as">
+      <default><![CDATA[['<Control><Super>k']]]></default>
+      <summary>Bottom-right quarter</summary>
+    </key>
+
+    <key name="snap-left-third" type="as">
+      <default><![CDATA[['<Control><Super>d']]]></default>
+      <summary>Left third</summary>
+    </key>
+
+    <key name="snap-center-third" type="as">
+      <default><![CDATA[['<Control><Super>f']]]></default>
+      <summary>Middle third</summary>
+    </key>
+
+    <key name="snap-right-third" type="as">
+      <default><![CDATA[['<Control><Super>g']]]></default>
+      <summary>Right third</summary>
+    </key>
+
+    <key name="snap-left-two-thirds" type="as">
+      <default><![CDATA[['<Control><Super>e']]]></default>
+      <summary>Left two-thirds</summary>
+    </key>
+
+    <key name="snap-right-two-thirds" type="as">
+      <default><![CDATA[['<Control><Super>t']]]></default>
+      <summary>Right two-thirds</summary>
+    </key>
+
+    <key name="snap-maximize" type="as">
+      <default><![CDATA[['<Control><Super>Return']]]></default>
+      <summary>Maximize to work area</summary>
+    </key>
+
+    <key name="snap-center" type="as">
+      <default><![CDATA[['<Control><Super>c']]]></default>
+      <summary>Center window without resizing</summary>
+    </key>
+
+  </schema>
+</schemalist>

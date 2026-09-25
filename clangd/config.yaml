@@ -1,0 +1,13 @@
+# clangd user config.
+#
+# Arduino's build recipes compile with `-w`, which silences every warning. The
+# arduino-language-server hands those exact flags to clangd, so without this you
+# only ever see hard errors in .ino files. Strip `-w` and turn warnings back on.
+#
+# Scoped to the language server's temp build tree so normal C/C++ projects keep
+# whatever flags their own compile_commands.json specifies.
+If:
+  PathMatch: /tmp/arduino-language-server.*/.*
+CompileFlags:
+  Remove: [-w]
+  Add: [-Wall, -Wextra, -Wno-unused-parameter]
