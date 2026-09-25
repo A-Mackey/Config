@@ -4,12 +4,12 @@
           path="/org/gnome/shell/extensions/rectangle-snap/">
 
     <key name="snap-left-half" type="as">
-      <default><![CDATA[['<Control><Super>Left']]]></default>
+      <default><![CDATA[['<Control><Super>Left', '<Control><Super>h']]]></default>
       <summary>Left half</summary>
     </key>
 
     <key name="snap-right-half" type="as">
-      <default><![CDATA[['<Control><Super>Right']]]></default>
+      <default><![CDATA[['<Control><Super>Right', '<Control><Super>l']]]></default>
       <summary>Right half</summary>
     </key>
 

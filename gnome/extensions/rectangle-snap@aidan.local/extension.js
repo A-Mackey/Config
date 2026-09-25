@@ -71,6 +71,13 @@ const TRAVERSE = {
     'snap-bottom-half': { dir: Meta.DisplayDirection.DOWN, into: 'snap-top-half' },
 };
 
+/* Snaps that flip to their mirror image when repeated, so either key reaches
+ * both sides: press once for its own side, again for the other. */
+const TOGGLE = {
+    'snap-left-two-thirds': 'snap-right-two-thirds',
+    'snap-right-two-thirds': 'snap-left-two-thirds',
+};
+
 /* How far a frame may be from a snap target and still count as "already
  * there". Terminals and other apps with resize increments round their size
  * down to a whole cell, so size gets more slack than position. */
@@ -143,19 +150,28 @@ export default class RectangleSnapExtension extends Extension {
         let monitor = win.get_monitor();
         let frame = win.get_frame_rect();
 
-        // Repeating a half steps to the neighbouring monitor. Decide this
-        // before un-maximizing, which changes the frame. A maximized window
-        // never matches a half, so it just snaps on its own monitor.
+        // Repeat behaviour depends on whether the window already fills this
+        // snap's target. Decide it before un-maximizing, which changes the
+        // frame. A maximized window never matches, so it just snaps.
+        const alreadyThere = () => {
+            if (win.get_maximized())
+                return false;
+            const here = workAreaGrid(win.get_work_area_for_monitor(monitor));
+            return frameMatches(frame, SNAPS[name](here, frame));
+        };
+
+        // Repeating two-thirds flips to the other side of the same monitor.
+        if (TOGGLE[name] && alreadyThere())
+            name = TOGGLE[name];
+
+        // Repeating a half steps to the neighbouring monitor.
         const traverse = TRAVERSE[name];
-        if (traverse && !win.get_maximized()) {
-            const here = win.get_work_area_for_monitor(monitor);
-            if (frameMatches(frame, SNAPS[name](workAreaGrid(here), frame))) {
-                const next = global.display.get_monitor_neighbor_index(monitor, traverse.dir);
-                if (next < 0)
-                    return; // Outermost pane; nowhere further to go.
-                monitor = next;
-                name = traverse.into;
-            }
+        if (traverse && alreadyThere()) {
+            const next = global.display.get_monitor_neighbor_index(monitor, traverse.dir);
+            if (next < 0)
+                return; // Outermost pane; nowhere further to go.
+            monitor = next;
+            name = traverse.into;
         }
 
         // A maximized or fullscreen window ignores move_resize_frame, so it has

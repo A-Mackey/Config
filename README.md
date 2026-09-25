@@ -45,12 +45,12 @@ stay floating and draggable; snapping only happens on keypress.
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Super+←/→` | Left / right half — repeat to step to the next monitor |
+| `Ctrl+Super+←/→` or `H/L` | Left / right half — repeat to step to the next monitor |
 | `Ctrl+Super+↑/↓` | Top / bottom half — repeat to step to the next monitor |
 | `Ctrl+Super+U/I` | Top-left / top-right quarter |
 | `Ctrl+Super+J/K` | Bottom-left / bottom-right quarter |
 | `Ctrl+Super+D/F/G` | Left / middle / right third |
-| `Ctrl+Super+E/T` | Left / right two-thirds |
+| `Ctrl+Super+E/T` | Left / right two-thirds — repeat to flip to the other side |
 | `Ctrl+Super+Return` | Maximize to work area |
 | `Ctrl+Super+C` | Center (keeps current size) |
 
