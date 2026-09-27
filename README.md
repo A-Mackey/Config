@@ -9,6 +9,7 @@ Personal configuration files for zsh, tmux, and neovim.
 | `zsh/` | Zsh config with oh-my-zsh, Powerlevel10k theme and config |
 | `tmux/` | Tmux config with vim-style navigation (Ctrl-Space prefix) |
 | `nvim/` | Neovim config with Lazy.nvim, Treesitter, Telescope, LSP |
+| `ghostty/` | Ghostty terminal config; `linux.conf` adds Linux-only keybindings |
 | `x11/`  | X11 session config (`.xprofile`); remaps Caps Lock to Backspace |
 | `gnome/` | Rectangle-style window snapping extension + GNOME keybinding tweaks |
 
@@ -37,6 +38,15 @@ The setup script creates symlinks and backs up any existing configs.
 - `Alt-Shift-HJKL` - Resize panes
 - `prefix + |` - Split horizontal
 - `prefix + -` - Split vertical
+
+### Ghostty (Linux)
+
+`ghostty/linux.conf` is linked to `~/.config/ghostty/platform.conf` on Linux
+only, so macOS keeps its Cmd bindings.
+
+- `Ctrl+T` - New tab (`Ctrl+Shift+T` still works)
+- `Ctrl+V` - Paste (`Ctrl+Shift+V` still works). Ghostty consumes it, so in
+  nvim use `Ctrl+Q` for Visual Block.
 
 ### GNOME window snapping (Rectangle Snap)
 

@@ -143,10 +143,6 @@ export default class RectangleSnapExtension extends Extension {
         if (!win || win.get_window_type() !== Meta.WindowType.NORMAL)
             return;
 
-        const needsResize = !MOVE_ONLY.has(name);
-        if (!win.allows_move() || (needsResize && !win.allows_resize()))
-            return;
-
         let monitor = win.get_monitor();
         let frame = win.get_frame_rect();
 
@@ -182,6 +178,13 @@ export default class RectangleSnapExtension extends Extension {
         const maximized = win.get_maximized();
         if (maximized)
             win.unmaximize(maximized);
+
+        // Only check this once the window is restored: Mutter reports
+        // maximized, tiled and fullscreen windows as not resizable (and
+        // fullscreen ones as not movable) purely because of that state.
+        const needsResize = !MOVE_ONLY.has(name);
+        if (!win.allows_move() || (needsResize && !win.allows_resize()))
+            return;
 
         if (monitor !== win.get_monitor())
             win.move_to_monitor(monitor);

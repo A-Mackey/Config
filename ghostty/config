@@ -10,3 +10,7 @@ background-opacity = 0.80
 # scrolling steps are small enough to visually track. Precision devices
 # (trackpads) are left at their default of 1.
 mouse-scroll-multiplier = discrete:1
+
+# Per-platform overrides (keybindings etc.). setup.sh links the matching file,
+# e.g. linux.conf, to ~/.config/ghostty/platform.conf; absent on other OSes.
+config-file = ?platform.conf

@@ -82,6 +82,7 @@ echo "  - ~/.zshrc"
 echo "  - ~/.p10k.zsh"
 echo "  - ~/.tmux.conf"
 echo "  - ~/.config/ghostty/config"
+echo "  - ~/.config/ghostty/platform.conf (Linux only)"
 echo "  - ~/.config/clangd/config.yaml"
 echo "  - ~/.config/tuicr/config.toml"
 echo "  - ~/.config/nvim"
@@ -149,6 +150,11 @@ backup_and_link "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
 
 # Ghostty terminal
 backup_and_link "$SCRIPT_DIR/ghostty/config" "$HOME/.config/ghostty/config"
+# Linux-only overrides (Ctrl+T new tab, Ctrl+V paste); the shared config
+# includes platform.conf optionally, so macOS simply doesn't get one.
+if [ "$(uname -s)" = "Linux" ]; then
+    backup_and_link "$SCRIPT_DIR/ghostty/linux.conf" "$HOME/.config/ghostty/platform.conf"
+fi
 
 # clangd (re-enables warnings for arduino-language-server, which builds with -w)
 backup_and_link "$SCRIPT_DIR/clangd/config.yaml" "$HOME/.config/clangd/config.yaml"
